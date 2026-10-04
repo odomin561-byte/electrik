@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Электромонтажные работы в Белорецке | Под ключ</title>
+    <meta name="description" content="Профессиональный электромонтаж в квартирах и домах Белорецка. От проекта до установки розеток и света. Гарантия 5 лет. Бесплатный выезд на замер.">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Шапка -->
+    <header class="header">
+        <div class="container header-container">
+            <div class="logo">⚡ Электро<span>Белорецк</span></div>
+            <nav class="nav">
+                <a href="#process">Как мы работаем</a>
+                <a href="#advantages">Преимущества</a>
+                <a href="#contact">Контакты</a>
+            </nav>
+            <div class="header-phone">
+                <a href="tel:+79001234567">+7 (900) 123-45-67</a>
+                <button class="btn btn-outline" onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})">Заказать звонок</button>
+            </div>
+            <button class="mobile-menu-btn" aria-label="Меню">☰</button>
+        </div>
+    </header>
+
+    <!-- Главный экран -->
+    <section class="hero">
+        <div class="container hero-content">
+            <h1>Электромонтажные работы в Белорецке под ключ</h1>
+            <p>Выполняем полный цикл работ в квартире: от грамотного проекта до установки чистовых розеток и освещения. Без пыли, с гарантией 5 лет по договору.</p>
+            <ul class="hero-features">
+                <li>✓ Бесплатный выезд и замер</li>
+                <li>✓ Работаем по ГОСТ и ПУЭ</li>
+                <li>✓ Фиксированная смета без скрытых доплат</li>
+            </ul>
+            <div class="hero-buttons">
+                <a href="#contact" class="btn btn-primary">Рассчитать стоимость</a>
+                <a href="#process" class="btn btn-secondary">Посмотреть этапы работ</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Преимущества -->
+    <section id="advantages" class="section advantages">
+        <div class="container">
+            <h2 class="section-title">Почему выбирают нашу бригаду</h2>
+            <div class="grid-3">
+                <div class="card">
+                    <div class="card-icon">📐</div>
+                    <h3>Грамотный проект</h3>
+                    <p>Составляем схему с учётом расстановки мебели и мощности ваших приборов. Никаких удлинителей в будущем.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🛡️</div>
+                    <h3>Гарантия 5 лет</h3>
+                    <p>Работаем официально по договору. Используем только сертифицированные материалы (кабель ВВГ-нг-LS, ГОСТ).</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🧹</div>
+                    <h3>Чистота и порядок</h3>
+                    <p>Штробление стен производится штроборезом с подключенным строительным пылесосом. Минимум пыли.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Процесс работы (Основной запрос) -->
+    <section id="process" class="section process">
+        <div class="container">
+            <h2 class="section-title">Как мы работаем в вашей квартире</h2>
+            <p class="section-subtitle">Прозрачный пошаговый процесс от первого звонка до включения света</p>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-number">1</div>
+                    <div class="timeline-content">
+                        <h3>Создание проекта и разметка</h3>
+                        <p>Выезд мастера на объект. Обсуждаем расположение мебели, техники и освещения. Составляем детальную схему электропроводки, рассчитываем нагрузку на группы и определяем точное место для каждой розетки, выключателя и распределительной коробки.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-number">2</div>
+                    <div class="timeline-content">
+                        <h3>Штробление стен и потолков</h3>
+                        <p>Аккуратное штробление под кабель и подрозетники с использованием профессионального штробореза и мощного пылесоса. Соблюдаем правила несущих стен (только вертикальные штробы). Подготовка гнёзд под монтажные коробки.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-number">3</div>
+                    <div class="timeline-content">
+                        <h3>Прокладка электрокабеля</h3>
+                        <p>Монтаж кабеля ВВГ-нг-LS в негорючей гофрированной трубке или кабель-каналах. Крепление трасс к потолку или стенам на дюбель-хомуты. Сборка и коммутация черновых распределительных коробок (клеммы WAGO или пайка).</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-number">4</div>
+                    <div class="timeline-content">
+                        <h3>Чистовой монтаж и сдача</h3>
+                        <p>После отделки стен устанавливаем подрозетники, механизмы розеток и выключателей, монтируем и подключаем светильники и люстры. Собираем электрощит, подписываем автоматы, проводим финальное тестирование всех линий и выдаём вам гарантию.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Услуги -->
+    <section class="section services">
+        <div class="container">
+            <h2 class="section-title">Наши услуги</h2>
+            <div class="grid-3">
+                <div class="service-card">🏠 Электромонтаж в новостройках</div>
+                <div class="service-card">🔄 Полная замена проводки в хрущёвках и сталинках</div>
+                <div class="service-card">💡 Сборка и модернизация электрощитов</div>
+                <div class="service-card">🔌 Перенос и добавление розеток/выключателей</div>
+                <div class="service-card">🏡 Электрика в частных домах и коттеджах</div>
+                <div class="service-card">📹 Установка видеонаблюдения и слаботочных систем</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Контакты и форма -->
+    <section id="contact" class="section contact">
+        <div class="container">
+            <h2 class="section-title">Оставьте заявку на бесплатный замер</h2>
+            <div class="contact-wrapper">
+                <div class="contact-info">
+                    <h3>Контакты в Белорецке</h3>
+                    <p>📍 г. Белорецк, выезд по всему городу и району</p>
+                    <p>📞 <a href="tel:+79001234567">+7 (900) 123-45-67</a></p>
+                    <p>✉️ <a href="mailto:electro-beloretsk@mail.ru">electro-beloretsk@mail.ru</a></p>
+                    <p>🕒 Работаем ежедневно с 9:00 до 20:00</p>
+                </div>
+                <form class="contact-form" onsubmit="event.preventDefault(); alert('Спасибо! Мы свяжемся с вами в течение 15 минут.');">
+                    <input type="text" placeholder="Ваше имя" required>
+                    <input type="tel" placeholder="Ваш телефон" required>
+                    <textarea placeholder="Кратко опишите задачу (например: новостройка, 2 комнаты)" rows="4"></textarea>
+                    <button type="submit" class="btn btn-primary btn-block">Отправить заявку</button>
+                    <p class="form-note">Нажимая кнопку, вы соглашаетесь с обработкой персональных данных</p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Подвал -->
+    <footer class="footer">
+        <div class="container">
+            <p>© 2026 ЭлектроБелорецк. Профессиональный электромонтаж.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
