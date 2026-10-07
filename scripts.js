@@ -31,3 +31,68 @@ mobileBtn.addEventListener('click', () => {
         nav.style.boxShadow = '0 4px 10px rgba(0,0,0,0.1)';
     }
 });
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('contactForm');
+    const messageBlock = document.getElementById('formMessage');
+    
+    // Записываем текущий URL страницы в скрытое поле
+    const urlInput = form.querySelector('input[name="page_url"]');
+    if(urlInput) urlInput.value = window.location.href;
+
+    form.addEventListener('submit', function(e) {
+        e.preventDefault(); // Отменяем стандартную отправку формы
+        
+        // Проверка ловушки: если бот заполнил скрытое поле, просто прерываем выполнение
+        const honeypot = form.querySelector('input[name="website"]');
+        if (honeypot && honeypot.value !== '') {
+            return; 
+        }
+
+        // Собираем данные из формы
+        const formData = new FormData(form);
+        const data = {};
+        formData.forEach((value, key) => { data[key] = value; });
+
+        // Блокируем кнопку на время отправки
+        const submitBtn = form.querySelector('button[type="submit"]');
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Отправка...';
+        messageBlock.textContent = '';
+
+        // === НАСТРОЙКИ FORMTOMAIL ===
+        const apiUrl = 'https://api.formtomail.ru/v1/send'; // URL эндпоинта FormToMail
+        const bearerToken = 'ВАШ_BEARER_ТОКЕН_ЗДЕСЬ'; // Токен авторизации из личного кабинета
+
+        // Отправляем запрос
+        fetch(apiUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + bearerToken
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(result => {
+            if (result.success) {
+                messageBlock.style.color = 'green';
+                messageBlock.textContent = 'Спасибо! Мы скоро вам перезвоним.';
+                form.reset();
+            } else {
+                throw new Error(result.message || 'Ошибка отправки');
+            }
+        })
+        .catch(error => {
+            messageBlock.style.color = 'red';
+            messageBlock.textContent = 'Ошибка при отправке. Попробуйте позже или позвоните нам.';
+            console.error('FormToMail Error:', error);
+        })
+        .finally(() => {
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Отправить заявку';
+        });
+    });
+});
+</script>
