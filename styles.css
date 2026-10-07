@@ -284,3 +284,28 @@ ul { list-style: none; }
     .timeline::before { left: 20px; }
     .timeline-number { width: 40px; height: 40px; font-size: 1rem; }
 }
+
+/* Стили для сообщений формы */
+.form-message {
+    margin-top: 15px;
+    padding: 12px;
+    border-radius: var(--radius);
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.95rem;
+    display: none; /* Скрыто по умолчанию */
+}
+
+.form-message.success {
+    display: block;
+    background-color: #d1fae5;
+    color: #065f46;
+    border: 1px solid #a7f3d0;
+}
+
+.form-message.error {
+    display: block;
+    background-color: #fee2e2;
+    color: #991b1b;
+    border: 1px solid #fecaca;
+}
