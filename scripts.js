@@ -1,98 +1,67 @@
-// Плавная прокрутка для якорных ссылок
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-        }
-    });
-});
+// Находим форму по её id (убедитесь, что в HTML у формы id="leadForm")
+const form = document.getElementById('leadForm');
 
-// Простая обработка мобильного меню (можно расширить при необходимости)
-const mobileBtn = document.querySelector('.mobile-menu-btn');
-const nav = document.querySelector('.nav');
+if (form) {
+  form.addEventListener('submit', async function(e) {
+    // 1. САМАЯ ВАЖНАЯ СТРОКА: Отменяем стандартный переброс браузера
+    e.preventDefault(); 
 
-mobileBtn.addEventListener('click', () => {
-    if (nav.style.display === 'flex') {
-        nav.style.display = 'none';
-    } else {
-        nav.style.display = 'flex';
-        nav.style.flexDirection = 'column';
-        nav.style.position = 'absolute';
-        nav.style.top = '70px';
-        nav.style.left = '0';
-        nav.style.right = '0';
-        nav.style.backgroundColor = '#fff';
-        nav.style.padding = '20px';
-        nav.style.boxShadow = '0 4px 10px rgba(0,0,0,0.1)';
-    }
-});
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const originalBtnText = submitBtn.innerText;
 
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const form = document.getElementById('contactForm');
-    const messageBlock = document.getElementById('formMessage');
+    // Собираем данные
+    const formData = new FormData(form);
+    const name = formData.get('name')?.trim();
+    const phone = formData.get('phone')?.trim();
     
-    // Записываем текущий URL страницы в скрытое поле
-    const urlInput = form.querySelector('input[name="page_url"]');
-    if(urlInput) urlInput.value = window.location.href;
+    // Считываем honeypot (имя поля company_website, как в документации)
+    const honeypotValue = formData.get('company_website')?.trim() || '';
 
-    form.addEventListener('submit', function(e) {
-        e.preventDefault(); // Отменяем стандартную отправку формы
-        
-        // Проверка ловушки: если бот заполнил скрытое поле, просто прерываем выполнение
-        const honeypot = form.querySelector('input[name="website"]');
-        if (honeypot && honeypot.value !== '') {
-            return; 
-        }
+    // Простая проверка
+    if (!name || phone.replace(/\D/g, '').length < 11) {
+      alert('Пожалуйста, заполните имя и телефон корректно.');
+      return;
+    }
 
-        // Собираем данные из формы
-        const formData = new FormData(form);
-        const data = {};
-        formData.forEach((value, key) => { data[key] = value; });
+    submitBtn.innerText = 'Отправка...';
+    submitBtn.disabled = true;
 
-        // Блокируем кнопку на время отправки
-        const submitBtn = form.querySelector('button[type="submit"]');
-        submitBtn.disabled = true;
-        submitBtn.textContent = 'Отправка...';
-        messageBlock.textContent = '';
-
-        // === НАСТРОЙКИ FORMTOMAIL ===
-        const apiUrl = 'https://api.formtomail.ru/v1/send'; // URL эндпоинта FormToMail
-        const bearerToken = 'ВАШ_BEARER_ТОКЕН_ЗДЕСЬ'; // Токен авторизации из личного кабинета
-
-        // Отправляем запрос
-        fetch(apiUrl, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + bearerToken
-            },
-            body: JSON.stringify(data)
+    try {
+      // 2. Отправляем данные через fetch на правильный API URL
+      const response = await fetch("https://api.formtomail.ru/send", {
+        method: "POST",
+        headers: {
+          "Authorization": "Bearer dUqpZpsDapom3rNX", // Ваш ключ
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          title: "Новая заявка: Электромонтаж в Белорецке",
+          body: {
+            "Имя": name,
+            "Телефон": phone
+          },
+          honeypot: honeypotValue // Передаем на верхний уровень
         })
-        .then(response => response.json())
-        .then(result => {
-            if (result.success) {
-                messageBlock.style.color = 'green';
-                messageBlock.textContent = 'Спасибо! Мы скоро вам перезвоним.';
-                form.reset();
-            } else {
-                throw new Error(result.message || 'Ошибка отправки');
-            }
-        })
-        .catch(error => {
-            messageBlock.style.color = 'red';
-            messageBlock.textContent = 'Ошибка при отправке. Попробуйте позже или позвоните нам.';
-            console.error('FormToMail Error:', error);
-        })
-        .finally(() => {
-            submitBtn.disabled = false;
-            submitBtn.textContent = 'Отправить заявку';
-        });
-    });
-});
-</script>
+      });
+
+      const result = await response.json();
+
+      // 3. Обрабатываем ответ
+      if (response.ok && result.statusCode === 200) {
+        alert('Спасибо! Заявка успешно отправлена. Мы свяжемся с вами в ближайшее время.');
+        form.reset(); // Очищаем форму
+      } else if (result.statusCode === 400) {
+        alert(`Ошибка: ${result.message}`);
+      } else {
+        console.error("FormToMail Error:", result);
+        alert('Сервис временно недоступен. Пожалуйста, позвоните нам.');
+      }
+    } catch (error) {
+      console.error('Сетевая ошибка:', error);
+      alert('Произошла ошибка сети. Пожалуйста, позвоните нам.');
+    } finally {
+      submitBtn.innerText = originalBtnText;
+      submitBtn.disabled = false;
+    }
+  });
+}
