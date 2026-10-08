@@ -31,7 +31,7 @@ if (form) {
       const response = await fetch("https://api.formtomail.ru/send", {
         method: "POST",
         headers: {
-          "Authorization": "Bearer dUqpZpsDapom3rNX(Электромонтажные раб)", // Ваш ключ
+          "Authorization": "dUqpZpsDapom3rNX", // Ваш ключ
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
