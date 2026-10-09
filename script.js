@@ -1,67 +1,50 @@
-// Находим форму по её id (убедитесь, что в HTML у формы id="leadForm")
-const form = document.getElementById('leadForm');
+<script>
+document.getElementById("leadForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const form = e.currentTarget;
+  const btn = form.querySelector('button[type="submit"]');
+  const msg = document.getElementById("formMessage");
+  const orig = btn.textContent;
+  const fd = new FormData(form);
+  const name = (fd.get("name") || "").toString().trim();
+  const phone = (fd.get("phone") || "").toString().trim();
+  const message = (fd.get("message") || "").toString().trim();
+  const honeypot = (fd.get("company_website") || "").toString().trim();
 
-if (form) {
-  form.addEventListener('submit', async function(e) {
-    // 1. САМАЯ ВАЖНАЯ СТРОКА: Отменяем стандартный переброс браузера
-    e.preventDefault(); 
-
-    const submitBtn = form.querySelector('button[type="submit"]');
-    const originalBtnText = submitBtn.innerText;
-
-    // Собираем данные
-    const formData = new FormData(form);
-    const name = formData.get('name')?.trim();
-    const phone = formData.get('phone')?.trim();
-    
-    // Считываем honeypot (имя поля company_website, как в документации)
-    const honeypotValue = formData.get('company_website')?.trim() || '';
-
-    // Простая проверка
-    if (!name || phone.replace(/\D/g, '').length < 11) {
-      alert('Пожалуйста, заполните имя и телефон корректно.');
-      return;
+  if (!name || phone.replace(/\D/g, "").length < 11) {
+    msg.className = "form-message error";
+    msg.textContent = "Пожалуйста, заполните имя и телефон корректно.";
+    return;
+  }
+  btn.textContent = "Отправка..."; btn.disabled = true;
+  try {
+    const res = await fetch("https://api.formtomail.ru/send", {
+      method: "POST",
+      headers: {
+        "Authorization": "Bearer dUqpZpsDapom3rNX",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        title: "Новая заявка: Электромонтаж в Белорецке",
+        body: { "Имя": name, "Телефон": phone, "Сообщение": message },
+        honeypot: honeypot
+      })
+    });
+    const data = await res.json();
+    if (res.ok && data.statusCode === 200) {
+      msg.className = "form-message success";
+      msg.textContent = "Спасибо! Заявка успешно отправлена.";
+      form.reset();
+    } else {
+      msg.className = "form-message error";
+      msg.textContent = data.statusCode === 400 ? "Ошибка: " + data.message : "Сервис временно недоступен. Позвоните нам.";
     }
-
-    submitBtn.innerText = 'Отправка...';
-    submitBtn.disabled = true;
-
-    try {
-      // 2. Отправляем данные через fetch на правильный API URL
-      const response = await fetch("https://api.formtomail.ru/send", {
-        method: "POST",
-        headers: {
-          "Authorization": "dUqpZpsDapom3rNX", // Ваш ключ
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          title: "Новая заявка: Электромонтаж в Белорецке",
-          body: {
-            "Имя": name,
-            "Телефон": phone
-          },
-          honeypot: honeypotValue // Передаем на верхний уровень
-        })
-      });
-
-      const result = await response.json();
-
-      // 3. Обрабатываем ответ
-      if (response.ok && result.statusCode === 200) {
-        alert('Спасибо! Заявка успешно отправлена. Мы свяжемся с вами в ближайшее время.');
-        form.reset(); // Очищаем форму
-      } else if (result.statusCode === 400) {
-        alert(`Ошибка: ${result.message}`);
-      } else {
-        console.error("FormToMail Error:", result);
-        alert('Сервис временно недоступен. Пожалуйста, позвоните нам.');
-      }
-    } catch (error) {
-      console.error('Сетевая ошибка:', error);
-      alert('Произошла ошибка сети. Пожалуйста, позвоните нам.');
-    } finally {
-      submitBtn.innerText = originalBtnText;
-      submitBtn.disabled = false;
-    }
-  });
-}
+  } catch (err) {
+    console.error(err);
+    msg.className = "form-message error";
+    msg.textContent = "Ошибка сети. Позвоните нам.";
+  } finally {
+    btn.textContent = orig; btn.disabled = false;
+  }
+});
+</script>`
