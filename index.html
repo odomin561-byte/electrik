@@ -149,19 +149,15 @@
     <input type="tel" name="phone" placeholder="+7 (___) ___-__-__" required />
   </label>
   
-<form class="contact-form" action="https://formtomail.ru/cabinet/key/6ac5198d54b12ff2f7404b76" method="POST">
-                    <!-- Скрытое поле: куда перенаправить пользователя после успешной отправки -->
-                    <!-- Можете оставить как есть или создать страницу thanks.html и указать её адрес -->
-                    <input type="hidden" name="_next" value="https://formtomail.ru/success">
-                    
-                    <!-- Поля ОБЯЗАТЕЛЬНО должны иметь атрибут name, чтобы сервис понял, что пришло -->
-                    <input type="text" name="Имя_клиента" placeholder="Ваше имя" required>
-                    <input type="tel" name="Телефон_клиента" placeholder="Ваш телефон" required>
-                    <textarea name="Сообщение" placeholder="Кратко опишите задачу (например: новостройка, 2 комнаты)" rows="4" required></textarea>
-                    
-                    <button type="submit" class="btn btn-primary btn-block">Отправить заявку</button>
-                    <p class="form-note">Нажимая кнопку, вы соглашаетесь с обработкой персональных данных</p>
-                </form>
+<form id="leadForm" class="contact-form" novalidate>
+  <input type="text" name="company_website" autocomplete="off" tabindex="-1" aria-hidden="true" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;">
+  <input type="text" name="name" placeholder="Ваше имя" required>
+  <input type="tel" name="phone" placeholder="Ваш телефон" required>
+  <textarea name="message" placeholder="Кратко опишите задачу (например: новостройка, 2 комнаты)" rows="4"></textarea>
+  <button type="submit" class="btn btn-primary btn-block">Отправить заявку</button>
+  <div id="formMessage" class="form-message"></div>
+  <p class="form-note">Нажимая кнопку, вы соглашаетесь с обработкой персональных данных</p>
+</form>
             </div>
         </div>
     </section>
