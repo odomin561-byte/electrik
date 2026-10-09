@@ -1,4 +1,4 @@
-<script>
+
 document.getElementById("leadForm").addEventListener("submit", async (e) => {
   e.preventDefault();
   const form = e.currentTarget;
@@ -47,4 +47,4 @@ document.getElementById("leadForm").addEventListener("submit", async (e) => {
     btn.textContent = orig; btn.disabled = false;
   }
 });
-</script>`
+
