@@ -124,20 +124,22 @@
         </div>
     </section>
 
-    <!-- Контакты и форма -->
+   <!-- Форма заявки -->
+<form id="contactForm" class="contact-form">
+    <!-- Скрытое поле-ловушка для ботов -->
+    <input type="text" name="website" style="display:none !important" tabindex="-1" autocomplete="off">
     
-<form id="leadForm" class="contact-form" novalidate>
-  <input type="text" name="company_website" autocomplete="off" tabindex="-1" aria-hidden="true" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;">
-  <input type="text" name="name" placeholder="Ваше имя" required>
-  <input type="tel" name="phone" placeholder="Ваш телефон" required>
-  <textarea name="message" placeholder="Кратко опишите задачу (например: новостройка, 2 комнаты)" rows="4"></textarea>
-  <button type="submit" class="btn btn-primary btn-block">Отправить заявку</button>
-  <div id="formMessage" class="form-message"></div>
-  <p class="form-note">Нажимая кнопку, вы соглашаетесь с обработкой персональных данных</p>
+    <input type="text" name="name" placeholder="Ваше имя" required>
+    <input type="tel" name="phone" placeholder="Ваш телефон" required>
+    
+    <!-- Скрытое поле для URL страницы -->
+    <input type="hidden" name="page_url" value=""> 
+    
+    <button type="submit" class="btn btn-primary btn-block">Отправить заявку</button>
+    <div id="formMessage" class="form-message"></div>
+    
+    <p class="form-note">Нажимая кнопку, вы соглашаетесь с обработкой персональных данных</p>
 </form>
-            </div>
-        </div>
-    </section>
 
     <!-- Подвал -->
     <footer class="footer">
