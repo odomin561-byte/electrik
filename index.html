@@ -152,10 +152,20 @@
   <!-- Остальные поля и кнопка -->
   <button type="submit" class="btn btn-primary">Отправить заявку</button>
 </form>
+                                <form class="contact-form" action="https://formtomail.ru/api/submit/dUqpZpsDapom3rNX" method="POST">
+                    <!-- Скрытое поле: куда перенаправить пользователя после успешной отправки -->
+                    <!-- Можете оставить как есть или создать страницу thanks.html и указать её адрес -->
+                    <input type="hidden" name="_next" value="https://formtomail.ru/success">
+                    
+                    <!-- Поля ОБЯЗАТЕЛЬНО должны иметь атрибут name, чтобы сервис понял, что пришло -->
+                    <input type="text" name="Имя_клиента" placeholder="Ваше имя" required>
+                    <input type="tel" name="Телефон_клиента" placeholder="Ваш телефон" required>
+                    <textarea name="Сообщение" placeholder="Кратко опишите задачу (например: новостройка, 2 комнаты)" rows="4" required></textarea>
+                    
+                    <button type="submit" class="btn btn-primary btn-block">Отправить заявку</button>
+                    <p class="form-note">Нажимая кнопку, вы соглашаетесь с обработкой персональных данных</p>
+                </form>
             </div>
-            <form id="contactForm" class="contact-form" 
-      action="https://formtomail.ru/api/submit/dUqpZpsDapom3rNX" 
-      method="POST">
         </div>
     </section>
 
